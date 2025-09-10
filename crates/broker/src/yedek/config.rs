@@ -255,23 +255,6 @@ pub struct MarketConf {
     /// - "shortest_expiry": Process orders by shortest expiry first (lock expiry for lock-and-fulfill orders, request expiry for others)
     #[serde(default, alias = "expired_order_fulfillment_priority")]
     pub order_commitment_priority: OrderCommitmentPriority,
-
-
-
-    /// MIN LOCKOUT TIME THAT ACCEPT WHILE ORDER
-    pub min_lock_out_time: u64,
-    pub lock_delay_ms: Option<u64>,
-
-    pub prove_adress: String,
-    pub block_number: u64,
-
-
-    pub my_rpc_url: String,
-    pub allow_requestor_addresses: Option<HashSet<Address>>,
-
-    pub rust_api_url: String,
-
-
 }
 
 impl Default for MarketConf {
@@ -307,19 +290,6 @@ impl Default for MarketConf {
             max_concurrent_preflights: defaults::max_concurrent_preflights(),
             order_pricing_priority: OrderPricingPriority::default(),
             order_commitment_priority: OrderCommitmentPriority::default(),
-
-
-            min_lock_out_time: 40, // 2 mins
-            lock_delay_ms: Some(0),  // Default 0ms delay
-
-            prove_adress: "".to_string(),
-            block_number: 0u64,
-
-            my_rpc_url: "wss://muddy-convincing-cloud.base-mainnet.quiknode.pro/14f24f3da2c7fd37dd3b2022e8a0a13abedb41f8/".to_string(),
-            allow_requestor_addresses: None,
-
-            rust_api_url: "".to_string(),
-
         }
     }
 }
@@ -558,7 +528,7 @@ impl ConfigWatcher {
                 }
                 Err(err) => tracing::error!("Failed to watch config file: {err:?}"),
             })
-                .context("Failed to construct watcher")?;
+            .context("Failed to construct watcher")?;
 
             watcher
                 .watch(&config_path_copy, notify::RecursiveMode::NonRecursive)

@@ -1,0 +1,16 @@
+[workspace]
+resolver = "2"
+members = ["common", "l1-to-l2", "l2", "l2-to-l1"]
+
+[profile.release]
+debug = 1
+lto = true
+
+[workspace.dependencies]
+alloy = "1.0"
+examples-common = { path = "common" }
+risc0-build = { version = "2.3" }
+risc0-ethereum-contracts = { version = "2.2" }
+risc0-op-steel = { path = "../../crates/op-steel" }
+risc0-zkvm = { version = "2.3" }
+serde = "1.0"
